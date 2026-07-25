@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32-C3 · BLE Control</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <canvas id="scene3d"></canvas>
+
+    <main class="panel">
+        <div class="eyebrow">BLE Link</div>
+        <h1>Controle do <span>LED</span> ESP32-C3</h1>
+        <p class="subtitle">Comunicação via Bluetooth Low Energy</p>
+
+        <div id="status">Status: Desconectado</div>
+
+        <div class="controls">
+            <button class="btn-connect" id="connectBtn" onclick="conectarBLE()">Conectar ESP32</button>
+            <div class="row-actions">
+                <button class="btn-on" id="onBtn" onclick="enviarComando('1')" disabled>Ligar LED</button>
+                <button class="btn-off" id="offBtn" onclick="enviarComando('0')" disabled>Desligar LED</button>
+            </div>
+        </div>
+
+        <p class="footer-tag">UUID Service 6e40...ca9e</p>
+    </main>
+
+    <!-- Three.js via CDN, usado apenas para a cena 3D decorativa -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Cena 3D: puramente visual, não interfere na lógica BLE -->
+    <script src="js/scene3d.js"></script>
+
+    <!-- Lógica de conexão BLE original, intocada -->
+    <script src="js/ble.js"></script>
+</body>
+</html>
