@@ -1,48 +1,41 @@
 # ESP32-C3 · BLE Control
 
-Painel web futurista para controlar um LED no ESP32-C3 via Bluetooth Low Energy (Web Bluetooth API), com firmware Python (MicroPython) para o lado do dispositivo.
+Painel web futurista para controlar um LED no ESP32-C3 via Bluetooth Low Energy (Web Bluetooth API), com o firmware em Arduino/C++ para o lado do dispositivo.
 
 ## Estrutura do projeto
 
 ```
 esp32-ble-control/
-├── index.html          # página principal
+├── index.html            # página principal
 ├── css/
-│   └── style.css       # visual dark/futurista
+│   └── style.css         # visual dark/futurista
 ├── js/
-│   ├── ble.js           # lógica de conexão BLE (não alterada)
-│   └── scene3d.js       # cena 3D decorativa (Three.js)
+│   ├── ble.js             # lógica de conexão BLE (não alterada)
+│   └── scene3d.js         # cena 3D decorativa (Three.js)
 ├── firmware/
-│   └── main.py          # firmware MicroPython do ESP32-C3
+│   └── esp32-c3-led.ino   # firmware Arduino/C++ do ESP32-C3
 └── README.md
 ```
 
 ## Como rodar o site
 
-O Web Bluetooth só funciona em contexto seguro (HTTPS ou `localhost`). Não abra `index.html` direto com `file://` — sirva por um servidor local:
+O Web Bluetooth só funciona em contexto seguro (HTTPS ou `localhost`). Se for testar localmente, sirva por um servidor local (não abra com `file://`):
 
 ```bash
 cd esp32-ble-control
 python3 -m http.server 8000
 ```
 
-Depois acesse `http://localhost:8000` em um navegador compatível (Chrome/Edge no desktop ou Android).
+Ou, se estiver publicado no GitHub Pages, é só acessar o link — já vem em HTTPS.
 
 ## Como gravar o firmware no ESP32-C3
 
-1. Instale o MicroPython no ESP32-C3 (via [esptool](https://github.com/espressif/esptool) ou Thonny).
-2. Conecte-se à placa via Thonny, `mpremote` ou `ampy`.
-3. Instale a biblioteca `aioble` (necessária para BLE assíncrono):
-   ```bash
-   mpremote mip install aioble
-   ```
-4. Envie `firmware/main.py` para a placa como `main.py`:
-   ```bash
-   mpremote cp firmware/main.py :main.py
-   ```
-5. Reinicie a placa. Ela deve anunciar como `ESP32-C3-LED`.
+1. Abra `firmware/esp32-c3-led.ino` na Arduino IDE (com o suporte a placas ESP32 instalado).
+2. Selecione a placa "ESP32C3 Dev Module" (ou equivalente) e a porta correta.
+3. Faça o upload para a placa.
+4. Abra o Monitor Serial (115200 baud) para ver os logs de conexão e comandos.
 
-> Ajuste `LED_PIN` em `firmware/main.py` conforme o GPIO do LED da sua placa.
+O LED embutido acende/apaga com lógica invertida (Active LOW), como já tratado no código.
 
 ## UUIDs (site e firmware precisam bater)
 
